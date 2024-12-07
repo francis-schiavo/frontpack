@@ -1,0 +1,37 @@
+doctype html
+html
+  head
+    / TODO: Replace "Frontpack" with the desired default application title
+    title = content_for?(:title) ? yield(:title) : 'Frontpack'
+    meta(content = 'text/html;charset=UTF-8' http-equiv = 'Content-Type')
+    meta(content = 'width=device-width,initial-scale=1' name = 'viewport')
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
+    = javascript_importmap_tags
+  body
+    header#header
+      toggle-button#btn-menu.md-hidden.lg-hidden(type='toggle' data-icon="menu" target="main-menu" visible-class="-" hidden-class="sm-hidden")
+      = link_to root_url, id: :logo do
+        / TODO: Replace this image_tag with your logo
+        = image_tag 'logo.svg'
+      nav#main-menu.sm-hidden
+        = render 'layouts/navigation'
+      #profile
+    - if content_for? :breadcrumbs
+      nav#breadcrumbs
+        = link_to t(:home), root_url, class: 'no-underscore'
+        |  /
+        = yield :breadcrumbs
+    #messages
+      - flash.each do |type, message|
+        text-box(class=type) = message
+    section#content
+      - if content_for? :actions
+        #actions = yield :actions
+      = yield
+    footer#footer
+      / TODO: Replace "Frontpack" with the desired copyright text
+      | &copy; #{Time.zone.today.year} - Frontpack
+
+    #loading= t('.loading')

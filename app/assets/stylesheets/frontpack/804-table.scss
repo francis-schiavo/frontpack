@@ -1,0 +1,60 @@
+@use "010-config" as config;
+
+table.responsive {
+  table-layout: fixed;
+  border-collapse: collapse;
+
+  th, td {
+    padding: .5em;
+  }
+
+  &.stripped {
+    tbody {
+      tr:nth-child(odd) {
+        td, th {
+          background: config.$table-stripped-odd-row-background;
+        }
+      }
+    }
+  }
+
+  &.selectable {
+    tbody {
+      tr:hover {
+        th, td {
+          background: config.$table-selectable-hover-background-color;
+        }
+      }
+    }
+  }
+
+  &.bordered {
+    border: config.$table-bordered-border-color 3px solid;
+  }
+
+  &.bordered-rows {
+    thead {
+      tr {
+        th, td {
+          border-bottom: config.$table-bordered-rows-border-color 2px solid;
+        }
+      }
+    }
+
+    tbody {
+      tr:not(:first-of-type) {
+        th, td {
+          border-top: config.$table-bordered-rows-border-color 1px dashed;
+        }
+      }
+    }
+  }
+
+  &.bordered-columns {
+    tbody, thead {
+      tr th:not(:last-child), tr td:not(:last-child) {
+        border-right: config.$table-bordered-columns-border-color 2px solid;
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+---
+en:
+  sign_in: Sign in
+  sign_out: Sign out
+  sign_up: Create account
+  recover_password: Recover password
+  resend_confirmation: Resend confirmation instructions
+  resend_unlock: Resend unlock instructions
+  home: Home
+  new: New
+  edit: Edit
+  update: Update
+  save: Save
+  delete: Delete
+  cancel: Cancel
+  back: Back
+  copy: Copy
+  created_successfully: "%{resource_name} created"
+  updated_successfully: "%{resource_name} updated"
+  deleted_successfully: "%{resource_name} destroyed"
+  admin_privileges_required: This resource requires admin rights
+  are_you_sure?: Are you sure?
+  ago: ago
+
+  activerecord:
+    attributes:
+      default_fields: &default_fields
+        created_at: Created at
+        updated_at: Updated at
+  views:
+    pagination:
+      last: '>>'
+      next: '>'
+      previous: '<'
+      first: '<<'
+      truncate: ...
+  layouts:
+    application:
+      loading: Loading...
+
+  status:
+    404: The resource you are looking for does not exist
+    500: The server encountered an internal error and was unable to complete your request

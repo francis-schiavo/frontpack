@@ -1,0 +1,113 @@
+@use "010-config" as config;
+@use "020-mixins" as mixins;
+@use "sass:math";
+
+@if config.$custom-layout == false {
+  body {
+    display: grid;
+    grid-template-columns: min-content 1fr min-content;
+    grid-template-rows: min-content min-content min-content 1fr min-content;
+    grid-template-areas: "header header header" "breadcrumbs breadcrumbs breadcrumbs" "messages messages messages" "left content right" "footer footer footer";
+  }
+
+  @include mixins.grid-area(header, breadcrumbs, messages, left, content, right, footer, actions);
+
+  #header {
+    display: grid;
+    grid-template-columns: min-content 1fr min-content;
+    grid-template-rows: auto;
+    grid-template-areas: "logo main-menu profile";
+    align-items: end;
+  }
+
+  #actions {
+    display: grid;
+    grid-template-columns: min-content 1fr min-content;
+    grid-template-rows: auto;
+    grid-template-areas: "left center right";
+    grid-column-gap: .5rem;
+    padding: .5rem;
+    align-items: stretch;
+
+    > div {
+      display: flex;
+      align-items: center;
+      column-gap: .5rem;
+    }
+
+    .left {
+      grid-area: left;
+    }
+
+    .center {
+      grid-area: center;
+    }
+
+    .right {
+      grid-area: right;
+    }
+  }
+
+  .actions {
+    grid-column: span 12;
+  }
+
+  @include mixins.grid-area(btn-left, logo, btn-right, main-menu, profile);
+
+  #btn-menu {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+  }
+
+  #logo {
+    display: inline-block;
+
+    img {
+      height: config.$logo-height;
+    }
+  }
+
+  #main-menu {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+
+  #left, #right {
+    display: inline-block;
+    width: config.$column-width;
+    background: rgba(255, 0, 0, .2);
+  }
+
+  #content {
+    overflow-y: auto;
+    padding: config.$default-padding;
+  }
+
+  @include mixins.for-phones-only() {
+    body {
+      grid-template-columns: 1fr;
+      grid-template-rows: min-content min-content min-content 1fr min-content;
+      grid-template-areas: "header" "breadcrumbs" "messages" "content" "footer";
+    }
+
+    #header {
+      grid-template-columns: 1fr;
+      grid-template-rows: min-content 1fr min-content;
+      grid-template-areas: "logo" "main-menu" "profile";
+      align-items: start;
+      justify-items: center;
+    }
+
+    #logo {
+      img {
+        height: math.div(config.$logo-height, 2);
+      }
+    }
+
+    #main-menu {
+      width: 100%;
+      flex-flow: column nowrap;
+    }
+  }
+}

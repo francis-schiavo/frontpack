@@ -1,0 +1,131 @@
+@use "010-config" as config;
+@use "020-mixins" as mixins;
+
+.container {
+  &.fluid {
+    width: 100%;
+  }
+
+  &.fixed-width {
+    width: config.$content-width;
+    margin: auto;
+  }
+
+  &.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: min-content;
+    @for $i from 2 through 11 {
+      &.grid-#{$i} {
+        grid-template-columns: repeat($i, 1fr);
+      }
+    }
+
+    @include mixins.property-range(grid-column, col, 1, 12, true, true) using($i) {
+      grid-column: span $i;
+    }
+    @include mixins.property-range(grid-column, column, 1, 12, true, true) using($i) {
+      grid-column: $i;
+    }
+
+    @include mixins.property-range(grid-row, row, 1, 12, true, true) using($i) {
+      grid-column: span $i;
+    }
+
+    @include mixins.size-variants(grid-gap, gap, .25rem, false, false, true, $selector-prefix: "&");
+    @include mixins.size-variants(grid-row-gap, row-gap, .25rem, false, false, true, $selector-prefix: "&");
+    @include mixins.size-variants(grid-column-gap, col-gap, .25rem, false, false, true, $selector-prefix: "&");
+  }
+
+  &.flex {
+    display: flex;
+
+    &.row {
+      flex-direction: row;
+
+      &.reverse {
+        flex-direction: row-reverse;
+      }
+    }
+
+    &.column {
+      flex-direction: column;
+
+      &.reverse {
+        flex-direction: column-reverse;
+      }
+    }
+
+    &.no-wrap {
+      flex-wrap: nowrap;
+    }
+
+    &.wrap {
+      flex-wrap: wrap;
+    }
+
+    @each $position in (start end center) {
+      &.#{$position} {
+        align-items: $position;
+        align-content: $position;
+      }
+      &.justify-#{$position} {
+        justify-items: $position;
+        justify-content: $position;
+      }
+    }
+    @each $position in (stretch space-around space-between space-evenly) {
+      &.#{$position} {
+        align-content: $position;
+      }
+      &.justify-#{$position} {
+        justify-content: $position;
+      }
+    }
+  }
+
+  &.centered {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    justify-content: center;
+    padding: 1rem;
+
+    .content {
+      width: config.$content-width;
+    }
+  }
+}
+
+@include mixins.for-tablets-up {
+  .container {
+
+    &.fixed-width {
+      width: 100%;
+    }
+
+    .centered {
+      .content {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@include mixins.for-phones-only {
+  .container {
+
+    &.fixed-width {
+      width: 100%;
+    }
+
+    .centered {
+      .content {
+        width: 100%;
+      }
+    }
+  }
+}

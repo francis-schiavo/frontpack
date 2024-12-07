@@ -1,0 +1,58 @@
+@use "010-config" as config;
+@use "020-mixins" as mixins;
+@use "300-typography" as typography;
+
+%button-appearance {
+  @extend .bold;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1rem;
+  white-space: nowrap;
+  padding: .5rem 1rem;
+  border-radius: .25rem;
+  @include mixins.background-variants(config.$theme-colors, 0%, 10%, 10%, .2, true);
+
+  &.small {
+    padding: .2rem .4rem;
+  }
+
+  &[data-icon]:before {
+    content: attr(data-icon);
+    font-family: config.$icon-font;
+  }
+}
+
+button, input[type=button], input[type=reset], input[type=submit] {
+  @extend %button-appearance;
+  @include mixins.background-variants(config.$theme-colors, 0%, -5%, -10%, 0);
+
+  &.glow {
+    box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.5), inset -1px -1px 1px rgba(0, 0, 0, 0.5);
+  }
+}
+
+a.button {
+  @extend %button-appearance;
+  @include mixins.color-variants(config.$theme-colors, 0%, 0%);
+  text-decoration: none !important;
+}
+
+.button-group {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+
+  button, a.button {
+    &:not(:last-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: 0;
+    }
+
+    &:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
